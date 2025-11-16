@@ -1,0 +1,251 @@
+﻿
+@model IEnumerable<Sistema_Tickets.Models.Usuario>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Gestión de Usuarios</h1>
+                </div>
+                <div class="col-sm-6">
+                    <a asp-controller="Usuarios" asp-action="Create" class="btn btn-primary float-right">
+                        <i class="fas fa-plus"></i> Nuevo Usuario
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> @TempData["Success"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> @TempData["Success"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Lista de Usuarios</h3>
+                </div>
+                <div class="card-body">
+                    <table id="usuariosTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Departamento</th>
+                                <th>Estado</th>
+                                <th>Fecha Alta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Correo</td>
+                                    <td>@item.Rol.Nombre</td> 
+                                    <td>@(item.Departamento?.Nombre ?? "Sin Departamento")</td>
+                                    <td>
+                                        @if (item.Esbloqueado)
+                                        {
+                                            <span class="badge badge-danger">
+                                                <i class="fas fa-lock"></i> Bloqueado
+                                            </span>
+                                        }
+                                        else if (item.Estado)
+                                        {
+                                            <span class="badge badge-success">
+                                                <i class="fas fa-check-circle"></i> Activo
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary">
+                                                <i class="fas fa-times-circle"></i> Inactivo
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>@item.FechaAlta?.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.UsuarioId" class="btn btn-warning btn-sm" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.UsuarioId" class="btn btn-info btn-sm" title="Ver Detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @if(item.Estado==true){
+                                            <a class="btn btn-danger btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#modalEliminar"
+                                            data-id="@item.UsuarioId"
+                                            data-nombre="@item.Nombre">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-success btn-sm"
+                                               data-toggle="modal"
+                                               data-target="#modalActivar"
+                                               data-id="@item.UsuarioId"
+                                               data-nombre="@item.Nombre">
+                                                <i class="fas fa-user-check"></i>
+                                            </a>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de confirmación de eliminación -->
+        <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form asp-action="Delete" asp-controller="Usuarios" method="post">
+                    
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="ItemId" name="id" />
+                            ¿Estás seguro de que deseas desactivar al usuario <strong id="ItemNombre"></strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal de confirmación de Activacion -->
+        <div class="modal fade" id="modalActivar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form asp-action="Activation" asp-controller="Usuarios" method="post">
+
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title" id="modalEliminarLabel">Confirmar Activación</h5>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="ItemId" name="id" />
+                            ¿Estás seguro de que deseas activar al usuario <strong id="ItemNombre"></strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Activar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+             var table = $('#usuariosTable').DataTable({
+                 "responsive": true,
+                 "lengthChange": true,
+                 "autoWidth": false,
+                 "pageLength": 10,
+                 "language": {
+                     "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json"
+                 },
+                 "dom": 'Bfrtip',
+                 "buttons": [
+                     {
+                         extend: 'copy',
+                         text: '<i class="fas fa-copy"></i> Copiar',
+                         className: 'btn btn-secondary btn-sm'
+                     },
+                     {
+                         extend: 'csv',
+                         text: '<i class="fas fa-file-csv"></i> CSV',
+                         className: 'btn btn-secondary btn-sm'
+                     },
+                     {
+                         extend: 'excel',
+                         text: '<i class="fas fa-file-excel"></i> Excel',
+                         className: 'btn btn-success btn-sm'
+                     },
+                     {
+                         extend: 'pdf',
+                         text: '<i class="fas fa-file-pdf"></i> PDF',
+                         className: 'btn btn-danger btn-sm'
+                     },
+                     {
+                         extend: 'print',
+                         text: '<i class="fas fa-print"></i> Imprimir',
+                         className: 'btn btn-info btn-sm'
+                     },
+                     {
+                         extend: 'colvis',
+                         text: '<i class="fas fa-columns"></i> Columnas',
+                         className: 'btn btn-secondary btn-sm'
+                     }
+                 ]
+             });
+
+             // Mover los botones al header de la card
+             table.buttons().container()
+                 .appendTo('#usuariosTable_wrapper .col-md-6:eq(0)');
+         });
+    </script>
+    <script>
+        $('#modalEliminar').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var id = button.data('id');
+            var nombre = button.data('nombre');
+
+            var modal = $(this);
+            modal.find('#ItemId').val(id);
+            modal.find('#ItemNombre').text(nombre);
+        });
+    </script>
+    <script>
+        $('#modalActivar').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var id = button.data('id');
+            var nombre = button.data('nombre');
+
+            var modal = $(this);
+            modal.find('#ItemId').val(id);
+            modal.find('#ItemNombre').text(nombre);
+        });
+    </script>
+}

@@ -1,0 +1,398 @@
+﻿@model Sistema_Tickets.ViewModels.Usuarios.UsuarioCreateViewmodel
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Crear Nuevo Usuario</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Usuarios</a></li>
+                        <li class="breadcrumb-item active">Crear</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <!-- Columna Principal -->
+                
+                <div class="col-md-8">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-user-plus"></i> Información del Usuario</h3>
+                        </div>
+                        
+                        
+                            <div class="card-body">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                                <!-- Nombre -->
+                                <div class="form-group">
+                                    <label asp-for="Nombre" class="control-label">
+                                        <i class="fas fa-user"></i> Nombre Completo *
+                                    </label>
+                                    <input asp-for="Nombre" class="form-control" placeholder="Ej: Juan Pérez García" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>
+
+                                <!-- Correo -->
+                                <div class="form-group">
+                                    <label asp-for="Correo" class="control-label">
+                                        <i class="fas fa-envelope"></i> Correo Electrónico *
+                                    </label>
+                                    <input asp-for="Correo" class="form-control" type="email" placeholder="ejemplo@empresa.com" />
+                                    <span asp-validation-for="Correo" class="text-danger"></span>
+                                </div>
+
+                                <!-- Contraseñas -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Password" class="control-label">
+                                                <i class="fas fa-lock"></i> Contraseña *
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="password" name="Password" id="Password" class="form-control" placeholder="Mínimo 8 caracteres" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span class="text-danger" data-valmsg-for="Password"></span>
+                                            <small class="form-text text-muted">Mínimo 8 caracteres</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ConfirmPassword" class="control-label">
+                                                <i class="fas fa-lock"></i> Confirmar Contraseña *
+                                            </label>
+                                            <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Repetir contraseña" />
+                                            <span class="text-danger" data-valmsg-for="ConfirmPassword"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Indicador de fortaleza de contraseña -->
+                                <div class="form-group">
+                                    <div class="progress" style="height: 5px;">
+                                        <div id="password-strength" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small id="password-strength-text" class="form-text"></small>
+                                </div>
+
+                                <!-- Rol y Departamento -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="RolId" class="control-label">
+                                                <i class="fas fa-user-tag"></i> Rol *
+                                            </label>
+                                            <select asp-for="RolId" class="form-control select2" asp-items="ViewBag.RolId">
+                                                <option value="">-- Seleccionar Rol --</option>
+                                            </select>
+                                            <span asp-validation-for="RolId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="DepartamentoId" class="control-label">
+                                                <i class="fas fa-building"></i> Departamento
+                                            </label>
+                                            <select asp-for="DepartamentoId" class="form-control select2" asp-items="ViewBag.DepartamentoId">
+                                                <option value="">-- Sin Departamento --</option>
+                                            </select>
+                                            <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Estado -->
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                        <input type="checkbox" class="custom-control-input" id="estadoSwitch" asp-for="Estado" checked />
+                                        <label class="custom-control-label" for="estadoSwitch">
+                                            <i class="fas fa-toggle-on"></i> Usuario Activo
+                                        </label>
+                                    </div>
+                                    <small class="form-text text-muted">Los usuarios inactivos no podrán iniciar sesión</small>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Guardar Usuario
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </a>
+                            </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Columna Lateral - Imagen de Perfil -->
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-image"></i> Foto de Perfil</h3>
+                        </div>
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img id="preview-imagen" 
+                                     src="~/adminLTE/dist/img/user2-160x160.jpg" 
+                                     class="profile-user-img img-fluid img-circle" 
+                                     alt="Vista previa"
+                                     style="width: 160px; height: 160px; object-fit: cover;">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="ImagenArchivo" class="control-label">
+                                    <i class="fas fa-upload"></i> Seleccionar Imagen
+                                </label>
+                                <div class="custom-file">
+                                    <input type="file" 
+                                           class="custom-file-input" 
+                                           asp-for="ImagenArchivo"
+                                           id="ImagenArchivo" 
+                                           name="ImagenArchivo" 
+                                           accept="image/*"
+                                           onchange="previewImage(event)">
+                                    <label class="custom-file-label" for="ImagenArchivo">Elegir archivo...</label>
+
+                                </div>
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-info-circle"></i> Formatos: JPG, PNG, GIF (Máx. 2MB)
+                                </small>
+                                <span class="text-danger" data-valmsg-for="ImagenArchivo"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Ayuda -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-info-circle"></i> Información</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Campos obligatorios:</strong></p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Nombre completo</li>
+                                <li><i class="fas fa-check text-success"></i> Correo electrónico</li>
+                                <li><i class="fas fa-check text-success"></i> Contraseña (min. 8 caracteres)</li>
+                                <li><i class="fas fa-check text-success"></i> Rol</li>
+                            </ul>
+                            <hr>
+                            <p><strong>Campos opcionales:</strong></p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-minus text-muted"></i> Departamento</li>
+                                <li><i class="fas fa-minus text-muted"></i> Foto de perfil</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+       $(document).ready(function() {
+        
+            // Validación en tiempo real de coincidencia de contraseñas
+            $('#ConfirmPassword').on('keyup', function() {
+                const password = $('#Password').val();
+                const confirm = $(this).val();
+                
+                if (confirm === '') {
+                    $(this).removeClass('is-invalid is-valid');
+                    $(this).next('.text-danger').text('');
+                } else if (password !== confirm) {
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                    $(this).next('.text-danger').text('Las contraseñas no coinciden');
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $(this).next('.text-danger').text('');
+                }
+            });
+
+            // Validación antes de enviar
+            $('form').on('submit', function(e) {
+                const password = $('#Password').val();
+                const confirm = $('#ConfirmPassword').val();
+                
+                if (password === '' || confirm === '') {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Debe ingresar una contraseña'
+                    });
+                    return false;
+                }
+                
+                if (password !== confirm) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Las contraseñas no coinciden'
+                    });
+                    return false;
+                }
+
+                if (password.length < 8) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La contraseña debe tener al menos 8 caracteres'
+                    });
+                    return false;
+                }
+            });
+
+            // Actualizar nombre del archivo seleccionado
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+        });
+
+         function previewImage(event) {
+             console.log('📸 previewImage ejecutado');
+
+             const input = event.target;
+             const file = input.files[0];
+
+             console.log('   Input:', input);
+             console.log('   Files:', input.files);
+             console.log('   File:', file);
+
+             if (file) {
+                 console.log('   ✅ Archivo detectado:', file.name, '-', file.size, 'bytes');
+
+                 // Vista previa
+                 const reader = new FileReader();
+                 reader.onload = function(e) {
+                     const preview = document.getElementById('preview-imagen');
+                     if (preview) {
+                         preview.src = e.target.result;
+                         console.log('   ✅ Vista previa actualizada');
+                     }
+                 };
+                 reader.readAsDataURL(file);
+
+                 // Actualizar el label del custom-file
+                 const label = input.nextElementSibling;
+                 if (label && label.classList.contains('custom-file-label')) {
+                     label.textContent = file.name;
+                     console.log('   ✅ Label actualizado:', file.name);
+                 }
+             } else {
+                 console.log('   ❌ No se detectó ningún archivo');
+             }
+         }
+
+         // Log al enviar el formulario
+         $(document).ready(function() {
+             $('form').on('submit', function(e) {
+                 console.log('📤 === ENVIANDO FORMULARIO ===');
+
+                 const input = document.getElementById('ImagenArchivo');
+                 console.log('   Input existe:', input !== null);
+
+                 if (input) {
+                     console.log('   Input.files.length:', input.files.length);
+
+                     if (input.files.length > 0) {
+                         const file = input.files[0];
+                         console.log('   ✅ Archivo en input:', file.name, '-', file.size, 'bytes');
+                     } else {
+                         console.log('   ⚠️ No hay archivos en el input');
+                     }
+                 }
+
+                 // Verificar FormData
+                 const formData = new FormData(this);
+                 const imagen = formData.get('ImagenArchivo');
+
+                 if (imagen && imagen instanceof File && imagen.size > 0) {
+                     console.log('   ✅ ImagenArchivo en FormData:', imagen.name);
+                 } else {
+                     console.log('   ❌ ImagenArchivo NO está en FormData o está vacío');
+                 }
+
+                 console.log('=================================');
+             });
+         });
+         // Toggle contraseña
+             $('#togglePassword').on('click', function() {
+                 const passwordField = $('#Password');
+                 const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                 passwordField.attr('type', type);
+                 $(this).toggleClass('fa-eye fa-eye-slash');
+             });
+		 // Indicador de fortaleza de contraseña
+		  $('#Password').on('input', function() {
+			  const password = $(this).val();
+			  const strengthBar = $('#password-strength');
+			  const strengthText = $('#password-strength-text');
+			  let strength = 0;
+			  if (password.length >= 8) strength += 1;
+			  if (/[A-Z]/.test(password)) strength += 1;
+			  if (/[a-z]/.test(password)) strength += 1;
+			  if (/[0-9]/.test(password)) strength += 1;
+			  if (/[\W]/.test(password)) strength += 1;
+			  switch (strength) {
+				  case 0:
+					  strengthBar.css('width', '0%').removeClass().addClass('progress-bar');
+					  strengthText.text('');
+					  break;
+				  case 1:
+					  strengthBar.css('width', '20%').removeClass().addClass('progress-bar bg-danger');
+					  strengthText.text('Muy débil').css('color', 'red');
+					  break;
+				  case 2:
+					  strengthBar.css('width', '40%').removeClass().addClass('progress-bar bg-warning');
+					  strengthText.text('Débil').css('color', 'orange');
+					  break;
+				  case 3:
+					  strengthBar.css('width', '60%').removeClass().addClass('progress-bar bg-info');
+					  strengthText.text('Aceptable').css('color', 'blue');
+					  break;
+				  case 4:
+					  strengthBar.css('width', '80%').removeClass().addClass('progress-bar bg-primary');
+					  strengthText.text('Fuerte').css('color', 'darkblue');
+					  break;
+				  case 5:
+					  strengthBar.css('width', '100%').removeClass().addClass('progress-bar bg-success');
+					  strengthText.text('Muy fuerte').css('color', 'green');
+					  break;
+			  }
+		  });
+    </script>
+
+    <!-- SweetAlert2 para alertas bonitas (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

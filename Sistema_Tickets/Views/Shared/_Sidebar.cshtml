@@ -1,0 +1,270 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+        <img src="~/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Sistema POS</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <i class="fas fa-user-circle fa-2x text-white"></i>
+            </div>
+            <div class="info">
+                <a asp-controller="Perfil" asp-action="Index" class="d-block">
+                    @User.Identity.Name
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                @if (User.IsInRole("Administrador"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Admin" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fa fa-home"></i>
+                            <p>Inicio</p>
+                        </a>
+                    </li>
+
+                    <!-- Inicio -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                Gestión de usuarios
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Usuarios" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-user-friends nav-icon"></i>
+                                    <p>Usuarios</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Roles" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-id-badge nav-icon"></i>
+                                    <p>Roles</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Departamentos" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-building nav-icon"></i>
+                                    <p>Departamentos</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-ticket-alt"></i>
+                            <p>
+                                Gestión de tickets
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Productos" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-file-alt nav-icon"></i>
+                                    <p>Tickets</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-plus-circle nav-icon"></i>
+                                    <p>Crear tickets</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-table nav-icon"></i>
+                                    <p>Categorias</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-signal nav-icon"></i>
+                                    <p>Estados</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-tags nav-icon"></i>
+                                    <p>Etiquetas</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-laptop-house nav-icon"></i>
+                                    <p>Canales</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Categorias" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-list-ol nav-icon"></i>
+                                    <p>Prioridades</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>
+                                Mis tickets
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Ventas" asp-action="Index" class="nav-link">
+                                    <i class="fa fa-list-ul nav-icon"></i>
+                                    <p>Tickets asignados</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="HistorialVenta" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-clipboard-check nav-icon"></i>
+                                    <p>Tickets completados</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Reportes
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Reportes" asp-action="Ventas" class="nav-link">
+                                    <i class="fas fa-chart-line nav-icon"></i>
+                                    <p>Reporte general</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Reportes" asp-action="Clientes" class="nav-link">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    <p>Rendimiento de tecnicos</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Reportes" asp-action="Productos" class="nav-link">
+                                    <i class="fas fa-chart-area nav-icon"></i>
+                                    <p>Mi rendimiento</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-desktop"></i>
+                            <p>
+                                Sistema
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Reportes" asp-action="Ventas" class="nav-link">
+                                    <i class="fas fa-cogs nav-icon"></i>
+                                    <p>Configuración</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Reportes" asp-action="Clientes" class="nav-link">
+                                    <i class="fas fa-tasks nav-icon"></i>
+                                    <p>Auditoria</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Faqs" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-question-circle nav-icon"></i>
+                                    <p>FAQs</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn text-left text-danger" style="width: 100%; background: none; border: none;">
+                                <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
+                                <p class="text-danger mb-0">Cerrar Sesión</p>
+                            </button>
+                        </form>
+                    </li>
+
+                }
+                
+
+                @if (User.IsInRole("Vendedor"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Vendedor" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fa fa-home"></i>
+                            <p>Inicio</p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cash-register"></i>
+                            <p>
+                                Ventas
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Ventas" asp-action="Index" class="nav-link">
+                                    <i class="fa fa-shopping-basket nav-icon"></i>
+                                    <p>Generar venta</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="HistorialVenta" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-history nav-icon"></i>
+                                    <p>Historial de ventas</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Clientes" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-id-card"></i>
+                            <p>Clientes</p>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn text-left text-danger" style="width: 100%; background: none; border: none;">
+                                <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
+                                <p class="text-danger mb-0">Cerrar Sesión</p>
+                            </button>
+                        </form>
+                    </li>
+                }
+
+
+            </ul>
+        </nav>
+    </div>
+</aside>

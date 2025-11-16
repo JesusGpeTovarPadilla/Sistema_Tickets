@@ -1,0 +1,632 @@
+﻿ @model Sistema_Tickets.ViewModels.Perfil.PerfilViewModel
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Perfil de Usuario</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <div class="row">
+            <!-- Columna Izquierda - Card de Perfil -->
+            <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            @if (!string.IsNullOrEmpty(Model.Imagen))
+                            {
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="@Url.Content(Model.Imagen)"
+                                     alt="Foto de perfil"
+                                     style="width: 150px; height: 150px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="profile-user-img img-fluid fas fa-user img-circle d-flex align-items-center justify-content-center mx-auto"
+                                     style="width: 150px; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 48px; font-weight: bold;">
+                                    <br />
+                                    <small style="font-size: 24px;">Core</small>
+                                </div>
+                            }
+                        </div>
+
+                        <h3 class="profile-username text-center mt-3">@Model.Nombre</h3>
+
+                        <p class="text-muted text-center">
+                            <span class="badge badge-primary">@Model.RolNombre</span>
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-envelope mr-1"></i> Correo</strong>
+                        <p class="text-muted">
+                            <a href="mailto:@Model.Correo">@Model.Correo</a>
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-building mr-1"></i> Departamento</strong>
+                        <p class="text-muted">
+                            @if (Model.PerfilDepartamento != null)
+                            {
+                                <span class="badge badge-info">@Model.PerfilDepartamento</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Sin asignar</span>
+                            }
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-calendar mr-1"></i> Fecha de Alta</strong>
+                        <p class="text-muted">@Model.DateTime?.ToString("dd/MM/yyyy HH:mm")</p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-clock mr-1"></i> Última Sesión</strong>
+                        <p class="text-muted">
+                            @if (Model.UltimaSesion!=null)
+                            {
+                                @Model.UltimaSesion?.ToString("dd/MM/yyyy HH:mm")
+                            }
+                            else
+                            {
+                                <span class="text-muted">Nunca</span>
+                            }
+                        </p>
+
+                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha - Información Detallada -->
+            <div class="col-md-9">
+                <!-- Card de Información General -->
+                <div class="card">
+                    <div class="card-header p-2">
+                        <h3 class="card-title">
+                            <i class="fas fa-user mr-1"></i> Información General
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-primary">
+                                        <i class="fas fa-id-badge"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">ID de Usuario</span>
+                                        <span class="info-box-number">#@Model.PerfilID</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-primary">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Nombre Completo</span>
+                                        <span class="info-box-number">@Model.Nombre</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-primary">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Correo Electrónico</span>
+                                        <span class="info-box-number" style="font-size: 16px;">@Model.Correo</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-primary">
+                                        <i class="fas fa-user-tag"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Rol Asignado</span>
+                                        <span class="info-box-number">
+                                            <span class="badge badge-primary">@Model.RolNombre</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-info">
+                                        <i class="fas fa-building"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Departamento</span>
+                                        <span class="info-box-number">
+                                            @if (Model.PerfilDepartamento != null)
+                                            {
+                                                <span class="badge badge-info">@Model.PerfilDepartamento</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Sin departamento</span>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-box bg-light">
+                                    <span class="info-box-icon bg-success">
+                                        <i class="fas fa-image"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Foto de Perfil</span>
+                                        <span class="info-box-number">
+                                            @if (!string.IsNullOrEmpty(Model.Imagen))
+                                            {
+                                                <i class="fas fa-check-circle text-success"></i>
+                                                <span>Configurada</span>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-times-circle text-danger"></i>
+                                                <span>Sin configurar</span>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Historial de Actividad -->
+                <div class="card">
+                    <div class="card-header p-2">
+                        <h3 class="card-title">
+                            <i class="fas fa-history mr-1"></i> Historial de Actividad
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <!-- Timeline item -->
+                            <div>
+                                <i class="fas fa-user-plus bg-blue"></i>
+                                <div class="timeline-item">
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i> @Model.DateTime?.ToString("dd/MM/yyyy HH:mm")
+                                    </span>
+                                    <h3 class="timeline-header">Cuenta Creada</h3>
+                                    <div class="timeline-body">
+                                        El usuario fue registrado en el sistema.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END timeline item -->
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Acciones Rápidas -->
+                <div class="card card-warning">
+                    <div class="card-header p-2">
+                        <h3 class="card-title">
+                            <i class="fas fa-bolt mr-1"></i> Acciones Rápidas
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-info mr-2 mb-2" data-toggle="modal" data-target="#modalEditarI" data-id="@Model.PerfilID">
+                            <i class="fas fa-camera"></i> Cambiar Foto de Perfil
+                        </button>
+                        <button type="button" class="btn btn-warning mb-2" data-toggle="modal" data-target="#modalEditarC" data-id="@Model.PerfilID">
+                            <i class="fas fa-key"></i> Cambiar Contraseña
+                        </button>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de editar contraseña -->
+    <div class="modal fade" id="modalEditarC" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-action="EditContraseña" asp-controller="Perfil" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="PerfilId" name="PerfilID" value="@Model.PerfilID" />
+
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title" id="modalEditarLabel">
+                            <i class="fas fa-key"></i> Cambiar Contraseña
+                        </h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- Alerta informativa -->
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números.
+                        </div>
+
+                        <!-- Contraseña Actual -->
+                        <div class="form-group">
+                            <label for="PasswordActual" class="control-label">
+                                <i class="fas fa-lock"></i> Contraseña Actual *
+                            </label>
+                            <div class="input-group">
+                                <input type="password"
+                                       name="PasswordActual"
+                                       id="PasswordActual"
+                                       class="form-control"
+                                       placeholder="Ingrese su contraseña actual"
+                                       required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-eye" id="togglePasswordActual" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="text-danger" id="errorPasswordActual"></span>
+                        </div>
+
+                        <!-- Nueva Contraseña -->
+                        <div class="form-group">
+                            <label for="PasswordNueva" class="control-label">
+                                <i class="fas fa-key"></i> Nueva Contraseña *
+                            </label>
+                            <div class="input-group">
+                                <input type="password"
+                                       name="PasswordNueva"
+                                       id="PasswordNueva"
+                                       class="form-control"
+                                       placeholder="Mínimo 8 caracteres"
+                                       minlength="8"
+                                       required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-eye" id="togglePasswordNueva" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="text-danger" id="errorPasswordNueva"></span>
+                        </div>
+
+                        <!-- Confirmar Nueva Contraseña -->
+                        <div class="form-group">
+                            <label for="PasswordConfirmar" class="control-label">
+                                <i class="fas fa-check"></i> Confirmar Nueva Contraseña *
+                            </label>
+                            <div class="input-group">
+                                <input type="password"
+                                       name="PasswordConfirmar"
+                                       id="PasswordConfirmar"
+                                       class="form-control"
+                                       placeholder="Repetir nueva contraseña"
+                                       minlength="8"
+                                       required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-eye" id="togglePasswordConfirmar" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="text-danger" id="errorPasswordConfirmar"></span>
+                        </div>
+
+                        <!-- Indicador de fortaleza de contraseña -->
+                        <div class="form-group">
+                            <label>Fortaleza de la contraseña:</label>
+                            <div class="progress" style="height: 8px;">
+                                <div id="password-strength"
+                                     class="progress-bar"
+                                     role="progressbar"
+                                     style="width: 0%"
+                                     aria-valuenow="0"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                            <small id="password-strength-text" class="form-text text-muted"></small>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Cambiar Contraseña
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de cambiar imagen de perfil -->
+    <div class="modal fade" id="modalEditarI" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-action="EditImagen" asp-controller="Perfil" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="PerfilId" name="PerfilID" value="@Model.PerfilID" />
+
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title" id="modalEditarLabel">
+                            <i class="fas fa-key"></i> Cambiar Contraseña
+                        </h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- Alerta informativa -->
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+							Solamente se aceptan imagenes con formato .jpg, .png y .jpeg. Tamaño máximo 2MB.
+                        </div>
+                        <div class="card card-warning">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-image"></i> Foto de Perfil</h3>
+                            </div>
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img id="preview-imagen"
+                                         src="@(!string.IsNullOrEmpty(Model.Imagen)
+                            ? Url.Content(Model.Imagen)
+                            : Url.Content("~/adminLTE/dist/img/user2-160x160.jpg"))"
+                                         class="profile-user-img img-fluid img-circle"
+                                         alt="Vista previa"
+                                         style="width: 160px; height: 160px; object-fit: cover;">
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="Imagen" class="control-label">
+                                        <i class="fas fa-upload"></i> Seleccionar Imagen
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file"
+                                               class="custom-file-input"
+                                               asp-for="Imagen"
+                                               id="ImagenArchivo"
+                                               name="Imagen"
+                                               accept="image/*"
+                                               onchange="previewImage(event)">
+                                        <label class="custom-file-label" for="Imagen">Elegir archivo...</label>
+
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle"></i> Formatos: JPG, PNG, GIF (Máx. 2MB)
+                                    </small>
+                                    <span class="text-danger" data-valmsg-for="ImagenArchivo"></span>
+                                </div>
+                               
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Cambiar Imagen
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+ @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+
+             // Validación en tiempo real de coincidencia de contraseñas
+             $('#ConfirmPassword').on('keyup', function() {
+                 const password = $('#Password').val();
+                 const confirm = $(this).val();
+
+                 if (confirm === '') {
+                     $(this).removeClass('is-invalid is-valid');
+                     $(this).next('.text-danger').text('');
+                 } else if (password !== confirm) {
+                     $(this).removeClass('is-valid').addClass('is-invalid');
+                     $(this).next('.text-danger').text('Las contraseñas no coinciden');
+                 } else {
+                     $(this).removeClass('is-invalid').addClass('is-valid');
+                     $(this).next('.text-danger').text('');
+                 }
+             });
+
+
+
+             // Actualizar nombre del archivo seleccionado
+             $('.custom-file-input').on('change', function() {
+                 let fileName = $(this).val().split('\\').pop();
+                 $(this).next('.custom-file-label').addClass("selected").html(fileName);
+             });
+         });
+
+          function previewImage(event) {
+              console.log('📸 previewImage ejecutado');
+
+              const input = event.target;
+              const file = input.files[0];
+
+              console.log('   Input:', input);
+              console.log('   Files:', input.files);
+              console.log('   File:', file);
+
+              if (file) {
+                  console.log('   ✅ Archivo detectado:', file.name, '-', file.size, 'bytes');
+
+                  // Vista previa
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                      const preview = document.getElementById('preview-imagen');
+                      if (preview) {
+                          preview.src = e.target.result;
+                          console.log('   ✅ Vista previa actualizada');
+                      }
+                  };
+                  reader.readAsDataURL(file);
+
+                  // Actualizar el label del custom-file
+                  const label = input.nextElementSibling;
+                  if (label && label.classList.contains('custom-file-label')) {
+                      label.textContent = file.name;
+                      console.log('   ✅ Label actualizado:', file.name);
+                  }
+              } else {
+                  console.log('   ❌ No se detectó ningún archivo');
+              }
+          }
+
+          // Toggle contraseña Actual
+              $('#togglePasswordActual').on('click', function() {
+                  const passwordField = $('#PasswordActual');
+                  const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                  passwordField.attr('type', type);
+                  $(this).toggleClass('fa-eye fa-eye-slash');
+              });
+          
+          // Toggle contraseña nueva
+              $('#togglePasswordNueva').on('click', function() {
+                  const passwordField = $('#PasswordNueva');
+                  const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                  passwordField.attr('type', type);
+                  $(this).toggleClass('fa-eye fa-eye-slash');
+              });
+
+          // Toggle contraseña confirmar
+              $('#togglePasswordConfirmar').on('click', function() {
+                  const passwordField = $('#PasswordConfirmar');
+                  const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                  passwordField.attr('type', type);
+                  $(this).toggleClass('fa-eye fa-eye-slash');
+              });
+          // Indicador de fortaleza de contraseña
+           $('#PasswordNueva').on('input', function() {
+               const password = $(this).val();
+               const strengthBar = $('#password-strength');
+               const strengthText = $('#password-strength-text');
+               let strength = 0;
+               if (password.length >= 8) strength += 1;
+               if (/[A-Z]/.test(password)) strength += 1;
+               if (/[a-z]/.test(password)) strength += 1;
+               if (/[0-9]/.test(password)) strength += 1;
+               if (/[\W]/.test(password)) strength += 1;
+               switch (strength) {
+                   case 0:
+                       strengthBar.css('width', '0%').removeClass().addClass('progress-bar');
+                       strengthText.text('');
+                       break;
+                   case 1:
+                       strengthBar.css('width', '20%').removeClass().addClass('progress-bar bg-danger');
+                       strengthText.text('Muy débil').css('color', 'red');
+                       break;
+                   case 2:
+                       strengthBar.css('width', '40%').removeClass().addClass('progress-bar bg-warning');
+                       strengthText.text('Débil').css('color', 'orange');
+                       break;
+                   case 3:
+                       strengthBar.css('width', '60%').removeClass().addClass('progress-bar bg-info');
+                       strengthText.text('Aceptable').css('color', 'blue');
+                       break;
+                   case 4:
+                       strengthBar.css('width', '80%').removeClass().addClass('progress-bar bg-primary');
+                       strengthText.text('Fuerte').css('color', 'darkblue');
+                       break;
+                   case 5:
+                       strengthBar.css('width', '100%').removeClass().addClass('progress-bar bg-success');
+                       strengthText.text('Muy fuerte').css('color', 'green');
+                       break;
+               }
+           });
+    </script>
+    <script>
+        $('#modalEditarC').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+           
+        var modal = $(this);
+        modal.find('#PerfilId').val(id);
+
+        });
+    </script>
+    <script>
+        $('#modalEditarI').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+
+        var modal = $(this);
+        modal.find('#PerfilId').val(id);
+
+        });
+    </script>
+     }

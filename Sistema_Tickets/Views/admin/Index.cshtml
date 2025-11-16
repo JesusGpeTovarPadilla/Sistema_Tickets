@@ -1,0 +1,236 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper" style="min-height: 581.4px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Inicio</a>Panel de administración</li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <h5 class="mb-2">Estadisticas generales</h5>
+            <div class="row">
+                <!-- New Orders -->
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@ViewBag.Departamentos</h3>
+                            <p>Productos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Bounce Rate -->
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@ViewBag.Tickets<sup style="font-size: 20px"></sup></h3>
+                            <p>Ventas realizadas</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- User Registrations -->
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@ViewBag.Usuarios</h3>
+                            <p>Clientes registrados</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Unique Visitors -->
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>@ViewBag.Roles</h3>
+                            <p>Usuarios registrados</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mb-2">Aceccos rapidos</h5>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Usuarios" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info"><i class="fas fa-user-friends"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Usuarios</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Roles" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info"><i class="fas fa-id-badge"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Roles</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Productos" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-secondary"><i class="fas fa-box-open"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Productos</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Categorias" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-secondary"><i class="fas fa-tags"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Categorias</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Ventas" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success"><i class="fa fa-shopping-basket"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Nueva venta</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="HistorialVenta" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success"><i class="fas fa-history"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Historial de ventas</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Clientes" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Clientes</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Reportes" asp-action="Ventas" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fas fa-receipt"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Reportes ventas</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Reportes" asp-action="Clientes" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Reportes clientes</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Reportes" asp-action="Productos" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fas fa-boxes"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Reportes inventario</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a asp-controller="Configuracion" asp-action="Index" class="text-dark">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-dark"><i class="fas fa fa-cogs"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Configuración</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <form asp-controller="Auth" asp-action="Logout" method="post" class="text-dark w-100">
+                        <button type="submit" class="info-box w-100 border-0 bg-transparent p-0 text-left">
+                            <span class="info-box-icon bg-danger"><i class="fas fa-sign-out-alt"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Cerrar sesión</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>

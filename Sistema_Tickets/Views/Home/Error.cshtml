@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null; // Ajusta si usas otro layout
+    ViewData["Title"] = "Algo salió mal";
+}
+
+<div class="error-wrapper">
+    <h1>😔 Lo sentimos</h1>
+    <p>Ha ocurrido un error inesperado. Nuestro equipo ya está trabajando en ello.</p>
+    <p>Por favor, intenta nuevamente más tarde o vuelve al <a href="@Url.Action("Index", "Home")">Login</a>.</p>
+</div>
+
+<style>
+    .error-wrapper {
+        max-width: 600px;
+        margin: 80px auto;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .error-wrapper h1 {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .error-wrapper p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .error-wrapper a {
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+            .error-wrapper a:hover {
+                color: #2980b9;
+            }
+</style>
+

@@ -1,0 +1,456 @@
+﻿@{
+    ViewData["Title"] = "FAQS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-question-circle"></i> Preguntas Frecuentes (FAQ)</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("RedirectToHome", "Home")">Inicio</a></li>
+                    <li class="breadcrumb-item active">FAQ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- Buscador -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <div class="input-group input-group-lg">
+                            <input type="text"
+                                   class="form-control"
+                                   id="searchFAQ"
+                                   placeholder="Buscar en preguntas frecuentes...">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorías de FAQ -->
+        <div class="row">
+            <!-- Categoría: General -->
+            <div class="col-md-6">
+                <div class="card card-primary collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-info-circle"></i> General
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: none;">
+                        <!-- Accordion dentro del card -->
+                        <div id="accordion-general">
+                            <!-- Pregunta 1 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#general-1"
+                                           aria-expanded="false">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Qué es este sistema de tickets?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="general-1"
+                                     class="collapse"
+                                     data-parent="#accordion-general">
+                                    <div class="card-body">
+                                        Es una plataforma diseñada para gestionar solicitudes, incidencias y consultas
+                                        del área de TI de manera eficiente. Permite crear, asignar y dar seguimiento a
+                                        cada ticket hasta su resolución.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 2 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#general-2">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Quién puede usar el sistema?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="general-2"
+                                     class="collapse"
+                                     data-parent="#accordion-general">
+                                    <div class="card-body">
+                                        Todos los empleados de la empresa con credenciales válidas. Los permisos
+                                        varían según el rol asignado (Usuario, Técnico, Gerente, Administrador).
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 3 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#general-3">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Cómo recupero mi contraseña?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="general-3"
+                                     class="collapse"
+                                     data-parent="#accordion-general">
+                                    <div class="card-body">
+                                        En la pantalla de inicio de sesión, haz clic en "¿Olvidaste tu contraseña?"
+                                        e ingresa tu correo electrónico. Recibirás instrucciones para restablecerla.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Tickets -->
+            <div class="col-md-6">
+                <div class="card card-success collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-ticket-alt"></i> Gestión de Tickets
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: none;">
+                        <div id="accordion-tickets">
+                            <!-- Pregunta 1 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#tickets-1">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Cómo creo un nuevo ticket?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="tickets-1"
+                                     class="collapse"
+                                     data-parent="#accordion-tickets">
+                                    <div class="card-body">
+                                        <ol>
+                                            <li>Ve al menú "Tickets" y selecciona "Crear Nuevo"</li>
+                                            <li>Completa el formulario con título, descripción y prioridad</li>
+                                            <li>Selecciona la categoría correspondiente</li>
+                                            <li>Adjunta archivos si es necesario</li>
+                                            <li>Haz clic en "Crear Ticket"</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 2 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#tickets-2">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Qué significan las prioridades?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="tickets-2"
+                                     class="collapse"
+                                     data-parent="#accordion-tickets">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><span class="badge badge-danger">Crítica</span> - Requiere atención inmediata (servicios caídos)</li>
+                                            <li><span class="badge badge-warning">Alta</span> - Importante pero no urgente</li>
+                                            <li><span class="badge badge-info">Media</span> - Puede esperar algunos días</li>
+                                            <li><span class="badge badge-secondary">Baja</span> - Solicitudes generales</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 3 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#tickets-3">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Puedo cancelar un ticket?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="tickets-3"
+                                     class="collapse"
+                                     data-parent="#accordion-tickets">
+                                    <div class="card-body">
+                                        Sí, puedes cancelar tus propios tickets siempre que no hayan sido asignados
+                                        o estén en proceso. Ve a "Mis Tickets", selecciona el ticket y elige "Cancelar".
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda fila de categorías -->
+        <div class="row">
+            <!-- Categoría: Notificaciones -->
+            <div class="col-md-6">
+                <div class="card card-info collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bell"></i> Notificaciones
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: none;">
+                        <div id="accordion-notificaciones">
+                            <!-- Pregunta 1 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#notif-1">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Cómo recibo notificaciones?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="notif-1"
+                                     class="collapse"
+                                     data-parent="#accordion-notificaciones">
+                                    <div class="card-body">
+                                        Recibirás notificaciones por correo electrónico y dentro del sistema cuando:
+                                        <ul>
+                                            <li>Se te asigna un ticket</li>
+                                            <li>Hay actualizaciones en tus tickets</li>
+                                            <li>Se agrega un comentario</li>
+                                            <li>Cambia el estado del ticket</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 2 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#notif-2">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Puedo desactivar las notificaciones?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="notif-2"
+                                     class="collapse"
+                                     data-parent="#accordion-notificaciones">
+                                    <div class="card-body">
+                                        Sí, puedes configurar tus preferencias de notificaciones en tu perfil,
+                                        sección "Configuración de Notificaciones".
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Soporte Técnico -->
+            <div class="col-md-6">
+                <div class="card card-warning collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-headset"></i> Soporte Técnico
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: none;">
+                        <div id="accordion-soporte">
+                            <!-- Pregunta 1 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#soporte-1">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Cuál es el horario de atención?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="soporte-1"
+                                     class="collapse"
+                                     data-parent="#accordion-soporte">
+                                    <div class="card-body">
+                                        El equipo de soporte técnico está disponible:
+                                        <ul>
+                                            <li><strong>Lunes a Viernes:</strong> 8:00 AM - 6:00 PM</li>
+                                            <li><strong>Emergencias:</strong> 24/7 para incidencias críticas</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 2 -->
+                            <div class="card card-light">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100 collapsed"
+                                           data-toggle="collapse"
+                                           href="#soporte-2">
+                                            <i class="fas fa-chevron-right mr-2"></i>
+                                            ¿Cómo contacto al soporte?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="soporte-2"
+                                     class="collapse"
+                                     data-parent="#accordion-soporte">
+                                    <div class="card-body">
+                                        Puedes contactarnos por:
+                                        <ul>
+                                            <li><i class="fas fa-envelope"></i> Email: soporte@empresa.com</li>
+                                            <li><i class="fas fa-phone"></i> Teléfono: (123) 456-7890</li>
+                                            <li><i class="fas fa-ticket-alt"></i> Creando un ticket en el sistema</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card de ayuda adicional -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-life-ring"></i> ¿Necesitas más ayuda?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                                <h5>Manual de Usuario</h5>
+                                <p>Descarga nuestra guía completa paso a paso</p>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-download"></i> Descargar PDF
+                                </a>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-video fa-3x text-success mb-3"></i>
+                                <h5>Tutoriales en Video</h5>
+                                <p>Aprende visualmente con nuestros tutoriales</p>
+                                <a href="#" class="btn btn-success btn-sm">
+                                    <i class="fas fa-play"></i> Ver Videos
+                                </a>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-envelope fa-3x text-info mb-3"></i>
+                                <h5>Contacto Directo</h5>
+                                <p>Escríbenos directamente para ayuda personalizada</p>
+                                <a href="mailto:soporte@empresa.com" class="btn btn-info btn-sm">
+                                    <i class="fas fa-paper-plane"></i> Enviar Email
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Buscador de FAQ
+            $('#searchFAQ').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+
+                $('.card-light').each(function() {
+                    var text = $(this).text().toLowerCase();
+                    if (text.indexOf(value) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Si se busca algo, expandir todas las categorías
+                if (value.length > 0) {
+                    $('.collapsed-card').each(function() {
+                        $(this).CardWidget('expand');
+                    });
+                }
+            });
+
+            // Cambiar icono del accordion
+            $('.collapse').on('show.bs.collapse', function() {
+                $(this).parent().find('.fa-chevron-right')
+                    .removeClass('fa-chevron-right')
+                    .addClass('fa-chevron-down');
+            });
+
+            $('.collapse').on('hide.bs.collapse', function() {
+                $(this).parent().find('.fa-chevron-down')
+                    .removeClass('fa-chevron-down')
+                    .addClass('fa-chevron-right');
+            });
+        });
+    </script>
+}

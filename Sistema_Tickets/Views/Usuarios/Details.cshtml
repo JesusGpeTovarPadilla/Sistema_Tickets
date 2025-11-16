@@ -1,0 +1,381 @@
+﻿@model Sistema_Tickets.Models.Usuario
+
+@{
+    ViewData["Title"] = "Detalles del Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Detalles del Usuario</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Usuarios</a></li>
+                        <li class="breadcrumb-item active">Detalles</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Columna Izquierda - Perfil -->
+                <div class="col-md-4">
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                @if (!string.IsNullOrEmpty(Model.Imagen))
+                                {
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="@Model.Imagen"
+                                         alt="Foto de perfil"
+                                         style="width: 150px; height: 150px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="~/adminLTE/dist/img/user2-160x160.jpg"
+                                         alt="Sin foto"
+                                         style="width: 150px; height: 150px; object-fit: cover;">
+                                }
+                            </div>
+
+                            <h3 class="profile-username text-center">@Model.Nombre</h3>
+
+                            <p class="text-muted text-center">
+                                <span class="badge badge-primary">
+                                    <i class="fas fa-user-tag"></i> @Model.Rol.Nombre
+                                </span>
+                            </p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-envelope mr-1"></i> Correo</b>
+                                    <a class="float-right text-sm" href="mailto:@Model.Correo">@Model.Correo</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-building mr-1"></i> Departamento</b>
+                                    <span class="float-right">
+                                        @if (Model.Departamento != null)
+                                        {
+                                            <span class="badge badge-info">@Model.Departamento.Nombre</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary">Sin Departamento</span>
+                                        }
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-calendar-alt mr-1"></i> Fecha de Alta</b>
+                                    <span class="float-right text-sm">
+                                        @Model.FechaAlta?.ToString("dd/MM/yyyy HH:mm")
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-clock mr-1"></i> Última Sesión</b>
+                                    <span class="float-right text-sm">
+                                        @if (Model.UltimaSeccion != null)
+                                        {
+                                            @Model.UltimaSeccion?.ToString("dd/MM/yyyy HH:mm")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Nunca</span>
+                                        }
+                                    </span>
+                                </li>
+                            </ul>
+
+                            <!-- Botones de Acción -->
+                            <a asp-action="Edit" asp-route-id="@Model.UsuarioId" class="btn btn-warning btn-block">
+                                <i class="fas fa-edit"></i> Editar Usuario
+                            </a>
+                            <a asp-action="Index" class="btn btn-secondary btn-block">
+                                <i class="fas fa-list"></i> Volver a la Lista
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Estado Card -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-info-circle"></i> Estado del Usuario</h3>
+                        </div>
+                        <div class="card-body">
+                            <strong><i class="fas fa-circle mr-1"></i> Estado de Cuenta</strong>
+                            <p class="text-muted">
+                                @if (Model.Estado)
+                                {
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-check-circle"></i> Cuenta Activa
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-times-circle"></i> Cuenta Inactiva
+                                    </span>
+                                }
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fas fa-lock mr-1"></i> Estado de Bloqueo</strong>
+                            <p class="text-muted">
+                                @if (Model.Esbloqueado)
+                                {
+                                    <span class="badge badge-danger">
+                                        <i class="fas fa-ban"></i> Usuario Bloqueado
+                                    </span>
+                                    <br>
+                                    <small class="text-danger">Este usuario no puede iniciar sesión</small>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-unlock"></i> Usuario Desbloqueado
+                                    </span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha - Información Detallada -->
+                <div class="col-md-8">
+                    <!-- Información General -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-circle"></i> Información General
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-id-badge text-primary"></i> ID de Usuario</label>
+                                        <p class="form-control-static"><strong>#@Model.UsuarioId</strong></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-user text-primary"></i> Nombre Completo</label>
+                                        <p class="form-control-static">@Model.Nombre</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-envelope text-primary"></i> Correo Electrónico</label>
+                                        <p class="form-control-static">
+                                            <a href="mailto:@Model.Correo">@Model.Correo</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-user-tag text-primary"></i> Rol Asignado</label>
+                                        <p class="form-control-static">
+                                            <span class="badge badge-primary badge-lg">
+                                                <i class="fas fa-shield-alt"></i> @Model.Rol.Nombre
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-building text-primary"></i> Departamento</label>
+                                        <p class="form-control-static">
+                                            @if (Model.Departamento != null)
+                                            {
+                                                <span class="badge badge-info badge-lg">
+                                                    <i class="fas fa-sitemap"></i> @Model.Departamento.Nombre
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Sin departamento asignado</span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-image text-primary"></i> Foto de Perfil</label>
+                                        <p class="form-control-static">
+                                            @if (!string.IsNullOrEmpty(Model.Imagen))
+                                            {
+                                                <span class="text-success">
+                                                    <i class="fas fa-check-circle"></i> Configurada
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">
+                                                    <i class="fas fa-times-circle"></i> No configurada
+                                                </span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline de Actividad -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-history"></i> Historial de Actividad
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="timeline">
+                                <!-- Timeline item -->
+                                <div>
+                                    <i class="fas fa-user-plus bg-primary"></i>
+                                    <div class="timeline-item">
+                                        <span class="time">
+                                            <i class="fas fa-clock"></i> @Model.FechaAlta?.ToString("dd/MM/yyyy HH:mm")
+                                        </span>
+                                        <h3 class="timeline-header">Cuenta Creada</h3>
+                                        <div class="timeline-body">
+                                            El usuario fue registrado en el sistema.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (Model.UltimaSeccion != null)
+                                {
+                                    <!-- Timeline item -->
+                                    <div>
+                                        <i class="fas fa-sign-in-alt bg-success"></i>
+                                        <div class="timeline-item">
+                                            <span class="time">
+                                                <i class="fas fa-clock"></i> @Model.UltimaSeccion?.ToString("dd/MM/yyyy HH:mm")
+                                            </span>
+                                            <h3 class="timeline-header">Última Sesión</h3>
+                                            <div class="timeline-body">
+                                                El usuario inició sesión por última vez.
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (Model.Esbloqueado)
+                                {
+                                    <!-- Timeline item -->
+                                    <div>
+                                        <i class="fas fa-lock bg-danger"></i>
+                                        <div class="timeline-item">
+                                            <span class="time">
+                                                <i class="fas fa-clock"></i> Fecha desconocida
+                                            </span>
+                                            <h3 class="timeline-header text-danger">Usuario Bloqueado</h3>
+                                            <div class="timeline-body">
+                                                La cuenta ha sido bloqueada por el administrador o por el sistema de seguridad.
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <!-- END -->
+                                <div>
+                                    <i class="fas fa-clock bg-gray"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acciones Rápidas -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bolt"></i> Acciones Rápidas
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a asp-action="Edit" asp-route-id="@Model.UsuarioId" class="btn btn-warning btn-block">
+                                        <i class="fas fa-edit"></i><br>
+                                        <small>Editar Datos</small>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#" class="btn btn-info btn-block" onclick="resetPassword(); return false;">
+                                        <i class="fas fa-key"></i><br>
+                                        <small>Restablecer Contraseña</small>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+									@if (Model.Estado)
+									{
+										<a asp-action="Delete" asp-route-id="@Model.UsuarioId" class="btn btn-secondary btn-block" onclick="return confirm('¿Está seguro de desactivar este usuario?');">
+											<i class="fas fa-user-slash"></i><br>
+											<small>Desactivar Usuario</small>
+										</a>
+									}
+									else
+									{
+										<a asp-action="Activation" asp-route-id="@Model.UsuarioId" class="btn btn-success btn-block" onclick="return confirm('¿Está seguro de activar este usuario?');">
+											<i class="fas fa-user-check"></i><br>
+											<small>Activar Usuario</small>
+										</a>
+									})
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        function resetPassword() {
+            Swal.fire({
+                title: '¿Restablecer contraseña?',
+                text: "Se enviará un correo al usuario con instrucciones",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, restablecer',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Aquí puedes hacer un POST al controlador
+                    Swal.fire(
+                        '¡Enviado!',
+                        'Se ha enviado el correo de restablecimiento.',
+                        'success'
+                    );
+                }
+            });
+        }
+    </script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
+

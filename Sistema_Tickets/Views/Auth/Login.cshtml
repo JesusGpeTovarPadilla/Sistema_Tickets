@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+}
+<div class="login-box">
+    <h2></h2>
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="@Url.Action("Login", "Auth")"" class="h1"><b>Sistema</b>Tickets</a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">Ingresa tus credenciales</p>
+
+            <form method="post" asp-action="Login" asp-controller="Auth">
+            @Html.AntiForgeryToken()
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Acceder</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+            @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    @ViewBag.Error
+                </div>
+            }
+            @if (Context.Response.StatusCode == 429)
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong>⏱️ Demasiados intentos fallidos</strong>
+                    <p>Has excedido el límite de intentos de inicio de sesión.</p>
+                    <p>Por favor, espera 1 minuto antes de volver a intentarlo.</p>
+                </div>
+            }
+            <!-- /.social-auth-links -->
+
+            <p class="mb-1">
+
+            </p>
+            <p class="mb-0">
+
+            </p>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</div>
+  @section Scripts {
+                @{
+                    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                }
+    <!-- ↑ Habilita validación client-side instantánea -->
+}
